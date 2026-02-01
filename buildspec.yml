@@ -36,7 +36,6 @@ phases:
       # 新しいタスク定義を登録し、そのリビジョンを取得
       - NEW_TASK_INFO=$(aws ecs register-task-definition --cli-input-json file://taskdef.json)
       - NEW_REVISION=$(echo $NEW_TASK_INFO | jq .taskDefinition.revision)
-      - echo "New task definition revision: $NEW_REVISION"
       # ECSサービスを更新して、新しいタスク定義を適用
       - echo "Updating ECS service..."
       - aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --task-definition "$ECS_TASK_DEFINITION_NAME:$NEW_REVISION" --force-new-deployment
